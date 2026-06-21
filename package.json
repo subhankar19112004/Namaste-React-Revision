@@ -6,7 +6,8 @@
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "test": "jest",
-    "watch-test": "jest --watch"
+    "watch-test": "jest --watch",
+    "clean": "node -e \"const fs=require('fs'); ['.parcel-cache', 'dist'].forEach(d => fs.rmSync(d, {recursive:true, force:true}))\""
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/postcss": "^4.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
