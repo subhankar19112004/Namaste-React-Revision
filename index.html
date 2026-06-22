@@ -2,13 +2,71 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Namaste React</title>
+    <title>FoodHub</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Inter, sans-serif;
+        background: #f8fafc;
+      }
+
+      .root-loading {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo {
+        width: 100px;
+        margin-bottom: 20px;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e5e7eb;
+        border-top: 4px solid #2563eb;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .text {
+        margin-top: 16px;
+        color: #475569;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <div id="root" class="root">
-      <h1>Not Rendered</h1>
+    <div id="root">
+      <div class="root-loading">
+        <img
+          src="https://thumbs.dreamstime.com/b/food-delivery-logo-food-delivery-logo-vector-template-157000359.jpg"
+          alt="FoodHub Logo"
+          class="logo"
+        />
+
+        <div class="spinner"></div>
+
+        <p class="text">Loading delicious restaurants...</p>
+      </div>
     </div>
 
     <script type="module" src="./src/App.jsx"></script>
