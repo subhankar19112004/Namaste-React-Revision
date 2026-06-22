@@ -7,10 +7,10 @@ const Body = () => {
   const [allRestaurants, setAllRestaurants] = useState([]);
 
   const topRestaurants = () => {
-    const topRest = restaurants.filter(
+    const topRest = allRestaurants.filter(
       (restaurant) => restaurant.info.avgRating > 4.5,
     );
-    console.log(topRest);
+
     setRestaurants(topRest);
   };
 
@@ -24,38 +24,51 @@ const Body = () => {
     );
 
     const json = await data.json();
-    let restaurants =
+
+    const restaurants =
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants;
-    console.log(restaurants);
+        ?.restaurants || [];
+
     setRestaurants(restaurants);
     setAllRestaurants(restaurants);
   };
 
-  if (restaurants.length === 0) {
-    return <Shimmer />;
-  }
-
-  return (
+  return restaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="flex flex-col m-2">
-      <div>
-        <div className="m-5 flex gap-5">
+      {/* Filter & Search Section */}
+      <div className="m-5 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
+        <div className="flex items-center gap-3">
           <button
             onClick={topRestaurants}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            className="h-11 rounded-xl bg-green-600 px-5 font-medium text-white transition-colors duration-200 hover:bg-green-700"
           >
-            Top Rated Restaurants
+            ⭐ Top Rated
           </button>
+
           <button
             onClick={() => setRestaurants(allRestaurants)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="h-11 rounded-xl bg-slate-800 px-5 font-medium text-white transition-colors duration-200 hover:bg-slate-900"
           >
-            Reset to Default
+            Reset
+          </button>
+        </div>
+
+        <div className="flex items-center overflow-hidden rounded-xl border border-gray-300 bg-gray-50 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100">
+          <input
+            type="text"
+            placeholder="Search restaurants..."
+            className="w-72 bg-transparent px-4 py-3 outline-none"
+          />
+          <button className="px-4 text-lg text-gray-500 hover:text-blue-600">
+            🔍
           </button>
         </div>
       </div>
+
+      {/* Restaurant Cards - UNCHANGED */}
       <div className="flex flex-wrap justify-between gap-4 items-start w-fit">
-        {/* <RestaurantCard resData={resList[0].info} /> */}
         {restaurants.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
         ))}
@@ -63,4 +76,5 @@ const Body = () => {
     </div>
   );
 };
+
 export default Body;
