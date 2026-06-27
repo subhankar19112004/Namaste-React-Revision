@@ -4,14 +4,16 @@ import Shimmer from "./Shimmer";
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [allRestaurants, setAllRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [filterData, setFilterData] = useState([]);
 
   const topRestaurants = () => {
-    const topRest = allRestaurants.filter(
+    const topRest = restaurants.filter(
       (restaurant) => restaurant.info.avgRating > 4.5,
     );
 
-    setRestaurants(topRest);
+    setFilterData(topRest);
+    setSearchText("");
   };
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const Body = () => {
         ?.restaurants || [];
 
     setRestaurants(restaurants);
-    setAllRestaurants(restaurants);
+    setFilterData(restaurants);
   };
 
   return restaurants.length === 0 ? (
@@ -48,7 +50,10 @@ const Body = () => {
           </button>
 
           <button
-            onClick={() => setRestaurants(allRestaurants)}
+              onClick={() => {
+                setFilterData(restaurants);
+                setSearchText("");
+              }}
             className="h-11 rounded-xl bg-slate-800 px-5 font-medium text-white transition-colors duration-200 hover:bg-slate-900"
           >
             Reset
@@ -60,8 +65,20 @@ const Body = () => {
             type="text"
             placeholder="Search restaurants..."
             className="w-72 bg-transparent px-4 py-3 outline-none"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-          <button className="px-4 text-lg text-gray-500 hover:text-blue-600">
+          <button
+            className="px-4 text-lg text-gray-500 hover:text-blue-600"
+            onClick={() => {
+              let filteredRestaurants = restaurants.filter((restaurant) =>
+                restaurant.info.name
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase()),
+              );
+              setFilterData(filteredRestaurants);
+            }}
+          >
             🔍
           </button>
         </div>
@@ -69,7 +86,7 @@ const Body = () => {
 
       {/* Restaurant Cards - UNCHANGED */}
       <div className="flex flex-wrap justify-between gap-4 items-start w-fit">
-        {restaurants.map((restaurant) => (
+        {filterData.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
         ))}
       </div>
