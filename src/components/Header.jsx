@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { LOGO_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [buttonName, setButtonName] = useState("Login");
+  console.log("Header Rendered")
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
@@ -23,16 +25,16 @@ const Header = () => {
         <nav>
           <ul className="flex items-center gap-8 text-gray-700 font-medium">
             <li className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
-              Home
+              <Link to="/">Home</Link>
             </li>
             <li className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
-              About
+              <Link to="/about">About</Link>
             </li>
             <li className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
-              Contact
+              <Link to="/contact">Contact</Link>
             </li>
             <li className="cursor-pointer hover:text-blue-600 transition-colors duration-200">
-              Cart 🛒
+              <Link to="/cart">Cart </Link>🛒
             </li>
           </ul>
         </nav>
